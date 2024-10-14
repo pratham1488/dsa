@@ -1,0 +1,81 @@
+#include <iostream>
+using namespace std;
+
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+
+class Stack {
+private:
+    Node* top;  
+
+public:
+    Stack() {  
+        top = nullptr;
+    }
+
+   
+    bool isEmpty() {
+        return top == nullptr;
+    }
+
+   
+    void push(int value) {
+        Node* newNode = new Node(); 
+        newNode->data = value;      
+        newNode->next = top;      
+        top = newNode;             
+        cout << value << " pushed onto stack.\n";
+    }
+
+    
+    void pop() {
+        if (isEmpty()) {
+            cout << "Stack underflow! Unable to pop.\n";
+            return;
+        }
+        Node* temp = top;          
+        top = top->next;           
+        cout << temp->data << " popped from stack.\n";
+        delete temp;                
+    }
+
+    
+    int peek() {
+        if (isEmpty()) {
+            cout << "Stack is empty.\n";
+            return -1;
+        }
+        return top->data;
+    }
+
+  
+    ~Stack() {
+        while (!isEmpty()) {
+            pop();  
+        }
+    }
+};
+
+int main() {
+    Stack s;
+
+    s.push(10);
+    s.push(20);
+    s.push(30);
+
+    cout << "Top element is " << s.peek() << endl;
+
+    s.pop();
+    s.pop();
+
+    cout << "Top element after popping is " << s.peek() << endl;
+
+    s.pop();
+    s.pop();  // Try to pop from an empty stack
+
+    return 0;
+}
