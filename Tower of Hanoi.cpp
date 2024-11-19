@@ -14,7 +14,7 @@ void towerOfHanoi(int disks, char source, char auxiliary, char destination) {
 }
 
 int main() {
-    int numDisks = 20; // Change this to test for different number of disks
+    int numDisks = 20; 
 
     if (numDisks < 1 || numDisks > 20) {
         std::cout << "Number of disks must be between 1 and 20." << std::endl;
