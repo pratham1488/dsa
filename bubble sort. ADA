@@ -1,0 +1,49 @@
+#include <iostream>
+#include <cmath>
+#include <fstream>
+#include <iomanip>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+
+using namespace std;
+
+void sortArray(vector<int>& data, int size) {
+    for (int pass = 0; pass < size - 1; ++pass) {
+        for (int index = 0; index < size - pass - 1; ++index) {
+            if (data[index] > data[index + 1]) {
+                swap(data[index], data[index + 1]);
+            }
+        }
+    }
+}
+
+int main() {
+    ofstream file1("sizes.csv"), file2("times.csv");
+    if (!file1 || !file2) {
+        cerr << "Error opening file!";
+        return 1;
+    }
+
+    for (int size = 2; size <= 25000; size *= 2) {
+        vector<int> numbers(size);
+        for (int index = 0; index < size; ++index) {
+            numbers[index] = size - index;
+        }
+
+        clock_t startTime = clock();
+        for (int repeat = 0; repeat < 100; ++repeat) {
+            vector<int> tempArray = numbers;
+            sortArray(tempArray, size);
+        }
+        clock_t endTime = clock();
+
+        double elapsedTime = static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC;
+        file1 << size << ", ";
+        file2 << (elapsedTime / 100) << ", ";
+    }
+
+    file1.close();
+    file2.close();
+    cout << "Process completed.";
+}
